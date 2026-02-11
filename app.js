@@ -76,14 +76,18 @@ const SEQUENTIAL_INTENTS = [
 
 // 定義哪些追問題應該作為獨立 Intent（不自動觸發，而是按照 INTENT_LIMITS 控制）
 const INDEPENDENT_FOLLOWUPS = [
-    "takeoath_F",  "adressA_F"  ,"adressB_F" , "MarriageA_F","employmentB_F","employmentC_F" , // takeoath 的追問獨立處理
+    "takeoath_F",  "adressA_F"  ,"adressB_F" , "MarriageA_F","employmentB_F","employmentC_F" , "travelA_F"// takeoath 的追問獨立處理
     // 可以添加更多需要獨立處理的追問 Intent
 ];
+
+// 關鍵詞解釋庫（從 CSV 加載）
+let keywordDefinitions = {}; // { "prostitution": { Content: "...", Translation: "..." }, ... }
 
 let intentUsageCounter = {};// 紀錄每個 Intent 已經問了幾題
 let intentSequenceIndex = {}; // 紀錄順序 Intent 當前問到第幾題
 let interviewTree = {};    // 結構化題庫
 let followUpQueue = [];    // 追問隊列
+let keywordQueue = []; // 關鍵詞解釋問題隊列
 let currentStage = 0;      // 當前面試階段 (cat)
 let isSessionStarted = false;
 let isRevealed = false;
@@ -109,6 +113,7 @@ const STAGE_GROUPS = [
 let currentGroupIndex = 0;     // 當前在第幾組
 let currentGroupStages = [];   // 當前組內剩餘的階段
 let completedStagesCount = 0;  // 已完成的階段數
+let askedQuestions = new Set(); // 紀錄所有已問過的題目內容
 
 // 2. 獲取 DOM 元素
 const mainBtn = document.getElementById('main-btn');
@@ -160,8 +165,9 @@ async function Data() {
 
 function buildInterviewTree(data) {
     interviewTree = {};
+    keywordDefinitions = {}; // 重置關鍵詞庫
     
-    // 第一遍：建立結構
+    // 第一遍：建立結構，同時收集關鍵詞定義
     data.forEach((row, index) => {
         if (!row.Content || !row.Content.trim()) {
             return;
@@ -169,6 +175,23 @@ function buildInterviewTree(data) {
         
         const stage = row.Stage || "0";
         const intent = row.Intent || "GENERAL";
+
+        // 如果是關鍵詞定義行（Intent 為 "KEYWORD_DEF"）
+        if (intent === "KEYWORD_DEF" && row.Keywords) {
+            // 支持多个关键词定义在同一行
+            const keywords = row.Keywords.split('|').map(k => k.trim().toLowerCase());
+            keywords.forEach(keyword => {
+                if (keyword) {
+                    // 存储关键词和它的翻译
+                    keywordDefinitions[keyword] = {
+                        Content: `What does ${keyword} mean?`,
+                        Translation: row.Translation || `${keyword}是什麼意思？`,
+                        Keywords: keyword
+                    };
+                }
+            });
+            return; // 不加入普通題庫
+        }
 
         if (!interviewTree[stage]) {
             interviewTree[stage] = {};
@@ -198,6 +221,7 @@ function buildInterviewTree(data) {
     });
     
     console.log('题库构建完成！阶段数:', Object.keys(interviewTree).length);
+    console.log('关键词定义数:', Object.keys(keywordDefinitions).length);
 }
 
 // --- 4. 核心邏輯：決定下一題 ---
@@ -226,6 +250,9 @@ function getNextStage() {
 }
 
 function getNextSmartQuestion() {
+    // 優先處理關鍵詞解釋問題
+    if (keywordQueue.length > 0) return keywordQueue.shift();
+    
     // 優先處理追問
     if (followUpQueue.length > 0) return followUpQueue.shift();
 
@@ -308,12 +335,35 @@ function getNextSmartQuestion() {
     
     // --- 核心修改結束 ---
 
+    // 處理普通追問
     if (intentGroup.followUps && intentGroup.followUps.length > 0 && Math.random() < 0.7) {
-        followUpQueue = [...intentGroup.followUps];
+        // 【修改點】：只加入還沒問過的追問
+        const freshFollowUps = intentGroup.followUps.filter(f => !askedQuestions.has(f.Content));
+        if (freshFollowUps.length > 0) {
+            followUpQueue = [...freshFollowUps];
+        }
+    }
+    
+    // 處理關鍵詞解釋（70%概率）
+    // 自动检测问题内容中是否包含已定义的关键词
+    if (Math.random() < 0.7) {
+        const contentLower = question.Content.toLowerCase();
+        
+        // 遍历所有已定义的关键词
+        Object.keys(keywordDefinitions).forEach(keyword => {
+            // 使用单词边界匹配，确保匹配完整单词
+            const regex = new RegExp('\\b' + keyword + '\\b', 'i');
+            if (regex.test(contentLower)) {
+                // 如果问题中包含这个关键词，加入关键词队列
+                keywordQueue.push(keywordDefinitions[keyword]);
+            }
+        });
     }
 
     return question;
 }
+
+
 
 // --- 5. 語音功能 ---
 
@@ -380,7 +430,8 @@ async function startSession() {
         currentGroupStages = [];
         completedStagesCount = 0;
         intentUsageCounter = {};
-        intentSequenceIndex = {}; // 重置順序索引;
+        intentSequenceIndex = {}; // 重置順序索引
+        keywordQueue = []; // 重置關鍵詞隊列
         
         // 手動初始化第一組（stage "0"）
         const firstGroup = STAGE_GROUPS[0];
@@ -416,6 +467,11 @@ function nextQuestion() {
         alert(q.Content);
         location.reload();
         return;
+    }
+
+// 【新增】：紀錄這題已經問過了，避免追問循環
+    if (q.Content) {
+        askedQuestions.add(q.Content);
     }
 
     isRevealed = false;

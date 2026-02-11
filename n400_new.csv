@@ -1,4 +1,4 @@
-Stage,Intent,Content,Translation,IsFollowUp,ParentIntent,
+Stage,Intent,Content,Translation,IsFollowUp,ParentIntent,Keywords
 0,greeting,"Hi, how are you?",你好嗎,0,,
 0,greeting,"Hi, how are you doing?",你好嗎,0,,
 0,greeting,"Hi, how do you feel today?",你好嗎，今天感覺怎麼樣？,0,,
@@ -213,3 +213,62 @@ Stage,Intent,Content,Translation,IsFollowUp,ParentIntent,
 42,yesquestion,"If the law requires it, are you willing to bear arms (carry weapons) on behalf of the United States?",如果法律要求，您是否願意代表美國拿起武器（攜帶武器）？,0,,
 42,yesquestion,"If the law requires it, are you willing to perform noncombatant services (do something that does not include fighting in a war) in the U.S. armed forces?",如果法律要求，您是否願意在美國武裝部隊中從事非戰鬥服務（做一些不包括在戰爭中戰鬥的事情）？,0,,
 42,yesquestion,"If the law requires it, are you willing to perform work of national importance under civilian direction (do non-military work that the U.S. Government says is important to the country)?",如果法律要求，您是否願意在平民領導下從事對國家有重大影響的工作（從事美國政府認為對國家重要的非軍事工作）？,0,,
+,KEYWORD_DEF,聲稱,Means To say something.,0,,Claimed
+,KEYWORD_DEF,登記,Means To sign up.,0,,Registered
+,KEYWORD_DEF,投票,Means To choose a leader.,0,,Vote
+,KEYWORD_DEF,欠稅,Means Not pay money to government.,0,,Owe taxes
+,KEYWORD_DEF,納稅,Means file taxes / Give money to government.,0,,Pay taxes
+,KEYWORD_DEF,非居民,Means Not living here.,0,,Nonresident
+,KEYWORD_DEF,非居民外僑,Means Not a U.S. resident.,0,,Nonresident alien
+,KEYWORD_DEF,外國人/外僑,Means Not a U.S. citizen.,0,,Alien
+,KEYWORD_DEF,提供,Means To give.,0,,Provide
+,KEYWORD_DEF,被拘留,Means Held by the police.,0,,Detained
+,KEYWORD_DEF,訓練,Means Learning how to do something.,0,,Training
+,KEYWORD_DEF,被逮捕,Means Taken by the police.,0,,Arrested
+,KEYWORD_DEF,被定罪,Means Found guilty by law.,0,,Convicted
+,KEYWORD_DEF,賣淫者/賣淫,Means have Sex for money.,0,,Prostitution
+,KEYWORD_DEF,賣淫者/賣淫,Means have Sex for money.,0,,Prostitute
+,KEYWORD_DEF,賭博,Means Playing for money.,0,,Gamble
+,KEYWORD_DEF,賭博,Means Playing for money.,0,,Gambling
+,KEYWORD_DEF,虛假,Means Something is not true.,0,,FALSE
+,KEYWORD_DEF,真相,Means Not a lie.,0,,Truth
+,KEYWORD_DEF,說謊,Means not tell the truth.,0,,Lie
+,KEYWORD_DEF,支持,Means To agree with.,0,,Support
+,KEYWORD_DEF,理解,Means Knowing what it means.,0,,Understand
+,KEYWORD_DEF,願意,Means agree to do it.,0,,Willing
+,KEYWORD_DEF,持武器,Means use a gun.,0,,Bear arms
+,KEYWORD_DEF,恐怖分子,Means A violent person/ Means Bad people.,0,,Terrorist
+,KEYWORD_DEF,蓄意破壞,Means To damage on purpose.,0,,Sabotage
+,KEYWORD_DEF,武器,Like a gun or knife.,0,,Weapon
+,KEYWORD_DEF,炸藥,Like a bomb.,0,,Explosive
+,KEYWORD_DEF,綁架,Means Taking someone by force.,0,,Kidnapping
+,KEYWORD_DEF,暗殺,Means Killing a leader.,0,,Assassination
+,KEYWORD_DEF,酷刑,Means To hurt someone badly.,0,,Torture
+,KEYWORD_DEF,種族滅絕,Means To kill a whole group.,0,,Genocide
+,KEYWORD_DEF,殺害,Means To take a life.,0,,Kill
+,KEYWORD_DEF,傷害,Means To hurt someone.,0,,Injure
+,KEYWORD_DEF,犯罪/違法行為,Means Breaking the law.,0,,Crime
+,KEYWORD_DEF,毒品,Means Bad medicine.,0,,Illegal drugs
+,KEYWORD_DEF,走私,Means to take something to a country illegally.,0,,Smuggled
+,KEYWORD_DEF,習慣性酗酒者,Means Drinking problem/ Drinks too much alcohol.,0,,Habitual drunkard
+,KEYWORD_DEF,多配偶制,Means More than one spouse.,0,,Polygamy
+,KEYWORD_DEF,非法,Means Against the law.,0,,Illegally
+,KEYWORD_DEF,非戰鬥,Means Not fighting.,0,,Noncombatant
+,KEYWORD_DEF,組織/團體,Means A group of people.,0,,Organization
+,KEYWORD_DEF,共產黨/共產主義,Means No freedom.,0,,Communist
+,KEYWORD_DEF,共產黨/共產主義,Means No freedom.,0,,Communism
+,KEYWORD_DEF,極權政黨,Means Government has total control.,0,,Totalitarian
+,KEYWORD_DEF,極權政黨,Means Government has total control.,0,,Totalitarian Party
+,KEYWORD_DEF,推翻,Means To take down the government.,0,,Overthrow
+,KEYWORD_DEF,警察部隊,Means Law enforcement.,0,,Police unit
+,KEYWORD_DEF,公共福利,Means Government help.,0,,Public benefit
+,KEYWORD_DEF,憲法,Means Supreme law of the land.,0,,Constitution
+,KEYWORD_DEF,美國政府形式,It's Republic. (or Democracy),0,,Form of Government
+,KEYWORD_DEF,效忠誓言,Means A promise to be loyal.,0,,Oath of Allegiance
+,KEYWORD_DEF,監獄,Means Place for criminals.,0,,Prison
+,KEYWORD_DEF,監獄,Means Place for criminals.,0,,Jail
+,KEYWORD_DEF,勞改營/勞動營,Means a Place for forced work.,0,,Labor camp
+,KEYWORD_DEF,軍隊,Means The army.,0,,Military
+,KEYWORD_DEF,驅逐出境,Means Forced to leave the U.S. / Get out from the U.S.,0,,Deportation
+,KEYWORD_DEF,遣返,Means Sent back to your country.,0,,Removed
+,KEYWORD_DEF,世界任何地方,Means Every place.,0,,Anywhere in the world
