@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <link rel="manifest" href="manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>US Citizenship N-400 Practice</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .version-text {
+            margin-top: 15px;
+            color: #8E8E93;
+            font-size: 12px;
+        }
+        .contact-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="practice-screen" >
+        <div class="progress-indicator">
+            <span id="q-current">1</span> / <span id="q-total">--</span>
+        </div>
+
+        <div class="audio-wave-container" id="audio-anim">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+        </div>
+
+        <div class="officer-avatar">👮‍♂️</div>
+
+        <div class="question-box" id="q-box" onclick="toggleQuestionCard()">
+            <div id="q-hidden" class="click-hint">
+                <div style="font-size: 40px;">👁️</div>
+                <span>點擊查看問題</span>
+            </div>
+            <div id="q-text" class="question-content hidden"></div>
+        </div>
+
+        <div class="controls-area">
+            <button class="btn round-btn" onclick="replayAudio()">🔊</button>
+            <button class="btn main-action-btn colorful" id="main-btn" onclick="handleMainAction()">
+                開始<br>面試
+            </button>
+            <button class="btn round-btn" id="btn-star" onclick="toggleBookmark()">☆</button>
+        </div>
+
+        <div class="bottom-actions">
+            <button class="btn rect-btn" onclick="restartSession()">🔄 重來</button>
+        </div>
+    </div>
+
+   <!-- 不依赖外部库的版本 -->
+   <script src="app.js"></script>
+ 
+</body>
+</html>
