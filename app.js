@@ -90,6 +90,7 @@ let followUpQueue = [];    // 追問隊列
 let keywordQueue = []; // 關鍵詞解釋問題隊列
 let currentStage = 0;      // 當前面試階段 (cat)
 let isSessionStarted = false;
+let currentQuestionContent = ""; // 存储当前问题的英文内容（用于语音重播）
 let isRevealed = false;
 let audioTimeout = null;
 let sessionHistoryCount = 0; // 紀錄已問過幾題
@@ -396,8 +397,9 @@ function setAnimation(isActive) {
 }
 
 function replayAudio() {
-    if (qText.innerText) playCurrentAudio(qText.innerText);
+    if (currentQuestionContent) playCurrentAudio(currentQuestionContent);
 }
+
 
 // --- 6. UI 互動與面試流程 ---
 
@@ -477,6 +479,9 @@ function nextQuestion() {
     isRevealed = false;
     qHidden.classList.remove('hidden');
     qText.classList.add('hidden');
+
+    // 保存当前问题的英文内容（用于语音重播）
+    currentQuestionContent = q.Content;
     
     // 使用 HTML 结构显示英文和中文
     if (q.Translation && q.Translation.trim()) {
